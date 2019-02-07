@@ -21,14 +21,16 @@ def main():
 
 			#Call Spek with that filepath
 			subprocess.Popen(['C:\Program Files (x86)\Spek\Spek.exe', fp])
-
+			
+			#Sleep to ensure file finishes in spek
 			time.sleep(2)			
-			#Move Mouse to use Spek GUI
+			
+			#Setting SAFE pyautogui
+			#Can tune once the rest is stable
 			pyautogui.FAIL_SAFE = True
 			pyautogui.PAUSE = 1
 
-			#pyautogui.moveTo(661, 1064) #Location of Spek on toolbar
-			#pyautogui.click()
+			#Key Presses to Save each file
 			pyautogui.hotkey('ctrl', 's')
 			pyautogui.press('enter')
 			pyautogui.hotkey('alt', 'f4')
