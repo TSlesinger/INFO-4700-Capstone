@@ -1,2 +1,8 @@
 # INFO-4700-Capstone
-The code for the ML Spek Capstone project. 
+
+This is the GitHub repository for all code involved in the 4700 Capstone class.
+
+This will contain:
+- Spek Batch Processing
+- Machine Learning Code
+- HTML and CSS
