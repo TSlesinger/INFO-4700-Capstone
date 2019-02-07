@@ -6,7 +6,7 @@ import time
 def grab():
 	print('Please import filepath for batch-process.')
 	filepath = input()
-	return filepath
+	return str(filepath)
 
 def main():
 	#Grab Filepath for Batch Processing
@@ -16,11 +16,11 @@ def main():
 	for root, dir, files, in os.walk(filepath):
 		for file in files:
 			#Find File Path of Song (need to not hard code)
-			fp =  filepath +'\\' + str(file)
-			print('Processing: ', fp)
+			song_filepath =  filepath +'\\' + str(file)
+			print('Processing: ', song_filepath)
 
 			#Call Spek with that filepath
-			subprocess.Popen(['C:\Program Files (x86)\Spek\Spek.exe', fp])
+			subprocess.Popen(['C:\Program Files (x86)\Spek\Spek.exe', song_filepath])
 			
 			#Sleep to ensure file finishes in spek
 			time.sleep(2)			
