@@ -20,15 +20,18 @@ def main():
 			print('Processing: ', fp)
 
 			#Call Spek with that filepath
-			subprocess.Popen(['C:\Program Files (x86)\Spek\Spek.exe', fp])
+			subprocess.Popen([r'C:\Users\spitf_000\Downloads\spek-0.8.2\Spek\spek.exe', fp])
 			
-			#Sleep to ensure file finishes in spek
-			time.sleep(2)			
+			#Implementing adaptive wait time based on file size
+			file_size = os.stat(fp).st_size
+			print(file_size)
+			wait_time = (file_size/1000000)/2
+			time.sleep(wait_time)			
 			
 			#Setting SAFE pyautogui
 			#Can tune once the rest is stable
 			pyautogui.FAIL_SAFE = True
-			pyautogui.PAUSE = 1
+			pyautogui.PAUSE = 0.5
 
 			#Key Presses to Save each file
 			pyautogui.hotkey('ctrl', 's')
