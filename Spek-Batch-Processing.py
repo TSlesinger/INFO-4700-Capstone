@@ -23,7 +23,7 @@ def main():
 
 			subprocess.Popen([r'C:\Program Files (x86)\Spek\Spek.exe', song_filepath])
 
-			subprocess.Popen([r'C:\Users\spitf_000\Downloads\spek-0.8.2\Spek\spek.exe', fp])
+			#subprocess.Popen([r'C:\Users\spitf_000\Downloads\spek-0.8.2\Spek\spek.exe', fp])
 
 			
 			#Implementing adaptive wait time based on file size
