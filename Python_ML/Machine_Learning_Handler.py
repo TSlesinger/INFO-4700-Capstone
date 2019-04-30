@@ -51,7 +51,7 @@ def spek_to_feature(filepath):
 def main():
 
 	print('Please input the filepath of the spectogram.')
-	filepath = input()
+	#filepath = input()
 
 	#Finding Features of new Spectogram
 
@@ -61,11 +61,9 @@ def main():
 	#Training the Algorithm
 	df = pd.read_csv('SCORE.csv', header = None)
 	
-
-	
 	#Finding and converting raw data
-	Y = df.iloc[:799, 0].values.astype(str)
-	X = df.iloc[:799, 1:].values.astype(float)
+	Y = df.iloc[:, 0].values.astype(str)
+	X = df.iloc[:, 1:].values.astype(float)
 	scalar.fit(X)
 	X = scalar.transform(X)
 
