@@ -12,8 +12,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 scalar = StandardScaler()
 
-from sklearn.tree import DecisionTreeClassifier
-
+from sklearn.svm import SVC
 
 
 
@@ -23,28 +22,31 @@ def spek_to_feature(filepath):
 	
 	im = imread(filepath, as_gray = True)
 
-    #Crop Picture to get rid of top section
-    #50 pixels is the standard header
-	im = im[49:]
+	#Crop Picture to get rid of top section
+	#50 pixels is the standard header
+	im = im[58:]
 
-    #Find Bounds of image (to give baseline)
+	#Find Bounds of image (to give baseline)
 	y_bound, x_bound = im.shape
 
-    #Looping across the x-axis (predefined resolution)
-	score = []
-	temp = 0
+	#Looping across the x-axis (predefined resolution)
+	final_score = []
 
-	for ii in range(0, y_bound):
-	    #If the sum of the pixels across the row is 
-	    if sum(im[ii]) != 0:
-	        temp += 1
-	        score.append(temp)
-	    #If the sum is 0 we give a bad score
-	    elif sum(im[ii]) == 0:
-	        temp -= 1
-	        score.append(temp)
+	for ii in range(0, x_bound-1):
+	    #Reset Score per-coluimn
+	    score = 0
+	    for jj in range(0, y_bound-1): #Loop down each "x column"
+	        try:
+	            if im[ii, jj] == 0:
+	                score -= 1
+	            elif im[ii,jj] != 0:
+	                score += 1
+	        except:
+	            'IndexError'
 
-	return np.asarray(score)
+	    final_score.append(score)
+
+	return np.asarray(final_score)
 
 
 
@@ -55,11 +57,11 @@ def main():
 
 	#Finding Features of new Spectogram
 
-	features = spek_to_feature(str(filepath))
+	features = spek_to_feature(r'C:\Users\spitf_000\Desktop\spek_pictures\01 - Knife Party - Rage Valley (VIP).flac.png')
 
 
 	#Training the Algorithm
-	df = pd.read_csv('SCORE.csv', header = None)
+	df = pd.read_csv('SCORE_v1.csv', header = None)
 	
 	#Finding and converting raw data
 	Y = df.iloc[:, 0].values.astype(str)
@@ -75,10 +77,10 @@ def main():
 	X_test = scalar.transform(X_test)
 
 
-	classifier = DecisionTreeClassifier(random_state = 123)
+	classifier = SVC(probability = True, random_state = 123)
 
 	classifier.fit(X,Y)
-
+	print('fitted')
 	#Outputing the prediction and probability
 	output = str(classifier.predict([features]))
 	proba = np.amax(classifier.predict_proba([features]))
